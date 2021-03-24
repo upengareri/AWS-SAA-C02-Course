@@ -4507,8 +4507,6 @@ are available.
 Public service that provides fully managed highly available message queues.
 
 - Replication happens within a region by default.
-  - Messages are guaranteed in the order they were received
-  - Provides FIFO with best effort, but no guarantee
 - Messages up to 256KB in size.
   - Should link to larger sets of data if needed.
 - Polling is checking for any messages on the queue.
@@ -4522,23 +4520,23 @@ Public service that provides fully managed highly available message queues.
 - **Dead-letter queue**
   - if a message is received multiple times but is unable to be finished, this
   puts it into a different workload to try and fix the corruption.
-- ASG can scale and lambdas can be invoked based on queue length.
+- **ASG can scale and lambdas can be invoked based on queue length.**
 - Standard queue
-  - multi-lane highway. 
-  - guarantee the order and at least once delivery.
+  - multi-lane highway.
+  - does not guarantee the order and at least once delivery.
 - FIFO queue
   - single lane road with no way to overtake
   - guarantee the order and at exactly once delivery
   - 3,000 messages p/s with batching or up to 300 messages p/s without
 
-    Standard Queue| FIFO Queue |
-    ---------|----------|---------
-    Multi lane highway | Single lane road with no way to overtake | 
-    guarantee the order and at least one delivery | guarantee the order and at exactly one delivery | 
-    empty| 3000 messages p/s with batching or up to 300 messages p/s without | 
+    Standard Queue| FIFO Queue
+    ---------|----------|
+    Multi lane highway | Single lane road with no way to overtake
+    does not guarantee the order and at least one delivery | guarantee the order and at exactly one delivery
+    empty| 3000 messages p/s with batching or up to 300 messages p/s without
 
 Billed on **requests** not messages. A request is a single request to SQS.
-One request can return 0 - 10 messages up to 64KB data in total.
+One request can return 0 - 10 messages up to 256KB data in total.
 Since requests can return 0 messages, frequently polling a SQS Queue, makes it
 less effective.
 
@@ -4551,7 +4549,7 @@ short
 - long (waitTimeSeconds) : it will wait for up to 20 seconds for messages
 to arrive on the queue. It will sit and wait if none currently exist.
 
-Messages can live on SQS Queue for up to 15 days. They offer KMS encryption
+Messages can live on SQS Queue for up to 14 days. They offer KMS encryption
 at rest. Server side encryption. Data is encrypted in transit with SQS and any
 clients.
 
