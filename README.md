@@ -4971,14 +4971,14 @@ is required.
 - File Mode (SMB and NFS)
   - File Storage Backed by S3 Objects
 - Volume Mode (Gateway Stored)
-  - Block Storage backed by S3 and EBS
-  - Great for disaster recovery
   - Data is kept locally
-  - Awesome for migrations
+  - Backup to EBS Snapshots
+  - Great for disaster recovery or migrations
+  - (relate it to JIRA async space migration)
 - Volume Mode (Cache Mode)
   - Data added to gateway is not stored locally.
-  - Backup to EBS Snapshots
   - Primarily stored on AWS
+  - Block Storage backed by S3 and EBS
   - Great for limited local storage capacity.
 
 ### 1.16.5. Snowball / Edge / Snowmobile
